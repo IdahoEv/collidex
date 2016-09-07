@@ -1,6 +1,6 @@
 # Collidex
 
-Collidex will be a 2D geometry collision library.
+Collidex will be a 2D geometry collision library in pure Elixir.
 
 ## Installation
 
