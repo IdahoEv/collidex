@@ -43,4 +43,8 @@ defmodule Collidex.Geometry.Rect do
   end
 
 
+
+  def center(%__MODULE__{ a: { x1, y1}, b: { x2, y2 }}) do
+    {(x1 + x2)/2.0, (y1 + y2)/2.0}
+  end
 end

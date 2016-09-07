@@ -1,4 +1,6 @@
 defmodule Collidex.Geometry.Circle do
+  @use Collidex.Geometry.Shape
+
   @moduledoc """
   Struct to represent perfect circles.
   """
@@ -30,4 +32,11 @@ defmodule Collidex.Geometry.Circle do
   """
   def make(x, y, r), do: make {x,y,r}
 
+
+  @doc """
+  Return the center of the circle as an {x,y} 2-tuple
+  """
+  def center(circle) do
+    circle.center
+  end
 end

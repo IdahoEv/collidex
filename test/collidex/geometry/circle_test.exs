@@ -1,5 +1,6 @@
 defmodule TestCircle do
   use ExSpec, async: true
+  # use ExCheck
 
   doctest Collidex.Geometry.Circle
   alias Collidex.Geometry.Circle
@@ -39,6 +40,15 @@ defmodule TestCircle do
       it "fails to make a circle from strings" do
         assert_raise(FunctionClauseError, fn -> Circle.make( "a","c","foo") end)
       end
+    end
+  end
+
+  describe "center" do
+    it "is the predefined center of the circle" do
+      assert {1, 1} == Circle.center(Circle.make({1, 1, 3.0}))
+      assert {-1, 1} == Circle.center(Circle.make({-1, 1, 1.0}))
+      assert {-2, -1} == Circle.center(Circle.make({-2, -1, 1.0}))
+      assert {3.5, -3} == Circle.center(Circle.make({3.5, -3, 1.0}))
     end
   end
 end

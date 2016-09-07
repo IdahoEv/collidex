@@ -41,4 +41,15 @@ defmodule TestRect do
       end
     end
   end
+
+  describe "center" do
+    it "returns the average of the points" do
+      assert { 0.0, 0.0 } = Rect.center(Rect.make({ 1,1, -1, -1}))
+
+      # Use some numbers with floating point rounding problems
+      {x, y} = Rect.center(Rect.make({ 2, -3.3, -3.66, 4.1}))
+      assert_in_delta(x, -0.83, 0.00001)
+      assert_in_delta(y, 0.40, 0.00001)
+    end
+  end
 end
