@@ -27,6 +27,11 @@ defmodule Collidex.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      { :excheck, "~> 0.5.0", only: :test},
+      { :triq, github: "triqng/triq", only: :test},
+      { :ex_spec, only: :test },
+      { :mix_test_watch, "~> 0.2", only: :dev}
+    ]
   end
 end
