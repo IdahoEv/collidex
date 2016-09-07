@@ -9,13 +9,13 @@ defmodule TestCircle do
       it "makes a circle from floats" do
         circle = Circle.make({0.0,0.0,1.0})
         assert is_map(circle) == true
-        assert circle == %Circle{ center: %{ x: 0.0, y: 0.0 }, radius: 1.0 }
+        assert circle == %Circle{ center: { 0.0, 0.0 }, radius: 1.0 }
       end
 
       it "makes a circle from ints" do
         circle = Circle.make({0,0,1})
         assert is_map(circle) == true
-        assert circle == %Circle{ center: %{ x: 0.0, y: 0.0 }, radius: 1.0 }
+        assert circle == %Circle{ center: { 0.0, 0.0 }, radius: 1.0 }
       end
 
       it "fails to make a circle from strings" do
@@ -27,13 +27,13 @@ defmodule TestCircle do
       it "makes a circle from floats" do
         circle = Circle.make(0.0,0.0,1.0)
         assert is_map(circle) == true
-        assert circle == %Circle{ center: %{ x: 0.0, y: 0.0 }, radius: 1.0 }
+        assert circle == %Circle{ center: { 0.0, 0.0 }, radius: 1.0 }
       end
 
       it "makes a circle from ints" do
         circle = Circle.make(0,0,1)
         assert is_map(circle) == true
-        assert circle == %Circle{ center: %{ x: 0.0, y: 0.0 }, radius: 1.0 }
+        assert circle == %Circle{ center: { 0.0, 0.0 }, radius: 1.0 }
       end
 
       it "fails to make a circle from strings" do

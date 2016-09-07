@@ -7,15 +7,15 @@ defmodule TestRect do
   describe "make" do
     context "from a 3-tuple" do
       it "makes a Rect from floats" do
-        rect = Rect.make({0.0, 0.0, 1.0, 1.0})
+        rect = Rect.make({0.0, 0.1, 1.0, 1.1})
         assert is_map(rect) == true
-        assert rect == %Rect{ a: %{ x: 0.0, y: 0.0 }, b: %{x: 1.0, y: 1.0} }
+        assert rect == %Rect{ a: { 0.0, 0.1 }, b: { 1.0, 1.1} }
       end
 
       it "makes a Rect from ints" do
-        rect = Rect.make({0, 0, 1, 1})
+        rect = Rect.make({0, 1, 2, 3})
         assert is_map(rect) == true
-        assert rect == %Rect{ a: %{ x: 0.0, y: 0.0 }, b: %{x: 1.0, y: 1.0} }
+        assert rect == %Rect{ a: { 0.0, 1.0 }, b: {2.0, 3.0} }
       end
 
       it "fails to make a Rect from strings" do
@@ -27,13 +27,13 @@ defmodule TestRect do
       it "makes a Rect from floats" do
         rect = Rect.make(0.0, 0.0, 1.0, 1.0)
         assert is_map(rect) == true
-        assert rect == %Rect{ a: %{ x: 0.0, y: 0.0 }, b: %{x: 1.0, y: 1.0} }
+        assert rect == %Rect{ a: { 0.0, 0.0 }, b: {1.0, 1.0} }
       end
 
       it "makes a Rect from ints" do
-        rect = Rect.make(0, 0, 1, 1)
+        rect = Rect.make(0, 0.2, 1, 1.5)
         assert is_map(rect) == true
-        assert rect == %Rect{ a: %{ x: 0.0, y: 0.0 }, b: %{x: 1.0, y: 1.0} }
+        assert rect == %Rect{ a: {0.0, 0.2 }, b: {1.0, 1.5} }
       end
 
       it "fails to make a Rect from strings" do
