@@ -23,7 +23,6 @@ defmodule Collidex.Geometry.Polygon do
       polygon.vertices,
       {0.0, 0.0, 1},
       fn {x, y}, { acc_x, acc_y, count} ->
-        IO.puts "adding value {#{x}, #{y}} to accumulator {#{acc_x}, #{acc_y}, #{count}}"
         { acc_x - (acc_x / count) + (x / count),
           acc_y - (acc_y / count) + (y / count),
           count + 1

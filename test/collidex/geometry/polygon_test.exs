@@ -13,7 +13,7 @@ defmodule TestPolygon do
   end
 
   describe "center" do
-    context "of a rectangle" do
+    context "of a (grid-aligned) rectangle" do
       {x, y} = Polygon.center(Polygon.make([{1,1}, {1,-1}, {-1,-1}, {-1, 1}]))
       assert_in_delta(x, 0.0, 0.00001)
       assert_in_delta(y, 0.0, 0.00001)
