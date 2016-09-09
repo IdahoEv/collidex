@@ -5,6 +5,7 @@ defmodule Collidex.Mixfile do
     [app: :collidex,
      version: "0.1.0",
      elixir: "~> 1.3",
+     description: "A 2D shape collision detection library",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -28,6 +29,7 @@ defmodule Collidex.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
+      { :graphmath, "~> 1.0.2" },
       { :excheck, "~> 0.5.0", only: :test},
       { :triq, github: "triqng/triq", only: :test},
       { :ex_spec, only: :test },

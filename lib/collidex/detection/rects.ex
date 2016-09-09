@@ -1,4 +1,8 @@
 defmodule Collidex.Detection.Rects do
+  @moduledoc """
+  This module tests for collisions between pairs of grid-aligned
+  rectangles.
+  """
 
   @doc """
   Test for collision between two grid-aligned
