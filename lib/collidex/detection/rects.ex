@@ -1,5 +1,25 @@
 defmodule Collidex.Detection.Rects do
+  alias Collision.Detection.Rect
 
+  @doc """
+  Test for collision between two grid-aligned
+  rectangles.  Expects two Collidect.Detection.Rect
+  structs and returns { :collision, "todo_provide_vector" }
+  if the two rectangles share any points in common, and false otherwise.
+
+  ## Examples
+  iex> Collidex.Detection.Rects.collision?(
+  ...>   Collidex.Geometry.Rect.make(-2, -0.75, 2, -2),
+  ...>   Collidex.Geometry.Rect.make(2, 0.5, 3, -0.5)
+  ...> )
+  false
+
+  iex> Collidex.Detection.Rects.collision?(
+  ...>   Collidex.Geometry.Rect.make(2, 0.5, 3, -0.5),
+  ...> Collidex.Geometry.Rect.make(3,-3,-3,3)
+  ...> )
+  {:collision, "todo_provide_vector"}
+  """
   def collision?(r1, r2) do
     { r1x1, r1y1 } = r1.a
     { r1x2, r1y2 } = r1.b
@@ -24,13 +44,6 @@ defmodule Collidex.Detection.Rects do
       true ->
         false
     end
-  end
-
-  @doc """
-  True if a is beween b and c, inclusive
-  """
-  defp not_between?(a,b,c) do
-    ((a > b and a > c) or (a < b and a < c))
   end
 
   defp in_range?(a,b,c) when b > c do

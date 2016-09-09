@@ -33,6 +33,7 @@ defmodule TestRects do
       refute Rects.collision?(fixtures.a, fixtures.g)
       refute Rects.collision?(fixtures.a, fixtures.h)
       refute Rects.collision?(fixtures.a, fixtures.i)
+      refute Rects.collision?(fixtures.d, fixtures.g)
     end
   end
 end
