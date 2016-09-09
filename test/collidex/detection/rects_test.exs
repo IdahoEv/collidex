@@ -6,7 +6,7 @@ defmodule TestRects do
   alias Collidex.Detection.Rects
   alias Collidex.Geometry.Rect
 
-  def fixtures do
+  def make_fixtures do
     %{
       a: Rect.make(1,1,-1,-1),
       b: Rect.make(1,1,2,2),
@@ -20,9 +20,9 @@ defmodule TestRects do
     }
   end
 
-
   describe "rect to rect collisions" do
     it "can detect colliding rects" do
+      fixtures = make_fixtures
       assert {:collision, _} = Rects.collision?(fixtures.a, fixtures.b)
       assert {:collision, _} = Rects.collision?(fixtures.a, fixtures.c)
       assert {:collision, _} = Rects.collision?(fixtures.a, fixtures.d)
@@ -30,6 +30,7 @@ defmodule TestRects do
       assert {:collision, _} = Rects.collision?(fixtures.a, fixtures.f)
     end
     it "can detect non-colliding rects" do
+      fixtures = make_fixtures
       refute Rects.collision?(fixtures.a, fixtures.g)
       refute Rects.collision?(fixtures.a, fixtures.h)
       refute Rects.collision?(fixtures.a, fixtures.i)

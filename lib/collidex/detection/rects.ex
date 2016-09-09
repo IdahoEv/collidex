@@ -1,5 +1,4 @@
 defmodule Collidex.Detection.Rects do
-  alias Collision.Detection.Rect
 
   @doc """
   Test for collision between two grid-aligned
