@@ -12,11 +12,36 @@ defmodule Collidex.Detection.PolySAT do
   Given two variables, determine if they appear to collide,
   based on a single test along their centroid-to-centroid axis.
 
-  This will report some false positives among nearly-colliding
-  polygons, but should be accurate enough for most game-related work.
+  This clause checks only one axis, the centroid-to-centroid axis, and so
+  will report some false positives among nearly-colliding polygons.
+  However it is much faster and should be accurate enough for most
+  game-related work.
   """
   def collision?(poly1, poly2, :fast) do
-    axis = Vec2.subtract(Polygon.center(poly2), Polygon.center(poly1))
+    Vec2.subtract(Polygon.center(poly2), Polygon.center(poly1))
+      |> collision_on_axis?(poly1, poly2)
+  end
+
+  @doc """
+  Given two variables, determine if they appear to collide,
+  based on a single test along their centroid-to-centroid axis.
+
+  This clause will report some false positives among nearly-colliding
+  polygons, but should be accurate enough for most game-related work.
+  """
+  def collision?(poly1, poly2, type \\ :accurate) do
+    {_, axes_to_test} = poly1.vertices
+      ++ [ Enum.last(poly2.vertices)]
+      ++ poly2.vertices
+      |> Enum.reduce({Enum.last(poly1.vertices),[]},
+        fn(vertex, {prev, list}) ->
+          {vertex, [ Vec2.subtract(vertex, prev) | list] }
+        end )
+    # axes_to_test
+    #   |> Enum.any?()
+  end
+
+  defp collision_on_axis?(axis, poly1, poly2) do
     collision = [poly1, poly2]
       |> Enum.map(&(&1.vertices))
       |> Enum.map(fn(vertices) ->
@@ -30,6 +55,7 @@ defmodule Collidex.Detection.PolySAT do
       false
     end
   end
+
 
   def overlap?([{min1, max1}, {min2, max2}]) do
     in_range?(min1, min2, max2)
