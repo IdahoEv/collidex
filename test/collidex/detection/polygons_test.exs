@@ -1,8 +1,8 @@
-defmodule Collidex.Detection.PolySATTest do
+defmodule Collidex.Detection.PolygonsTest do
   use ExSpec, async: true
 
-  doctest Collidex.Detection.PolySAT
-  alias Collidex.Detection.PolySAT
+  doctest Collidex.Detection.Polygons
+  alias Collidex.Detection.Polygons
   alias Collidex.Geometry.Polygon
 
   def make_fixtures do
@@ -26,9 +26,9 @@ defmodule Collidex.Detection.PolySATTest do
       |> Enum.each(fn({name1, name2}) ->
         shape1 = Map.fetch!(fixtures, name1)
         shape2 = Map.fetch!(fixtures, name2)
-        assert PolySAT.collision?(shape1, shape2, :fast),
+        assert Polygons.collision?(shape1, shape2, :fast),
           "Expected a collision between shapes #{name1} and #{name2}"
-        assert PolySAT.collision?(shape2, shape1, :fast),
+        assert Polygons.collision?(shape2, shape1, :fast),
           "Expected a collision between shapes #{name2} and #{name1}"
       end)
     end
@@ -38,9 +38,9 @@ defmodule Collidex.Detection.PolySATTest do
       |> Enum.each(fn({name1, name2}) ->
         shape1 = Map.fetch!(fixtures, name1)
         shape2 = Map.fetch!(fixtures, name2)
-        refute PolySAT.collision?(shape1, shape2, :fast),
+        refute Polygons.collision?(shape1, shape2, :fast),
           "Expected no collision between shapes #{name1} and #{name2}"
-        refute PolySAT.collision?(shape2, shape1, :fast),
+        refute Polygons.collision?(shape2, shape1, :fast),
           "Expected no collision between shapes #{name1} and #{name2}"
       end)
     end
@@ -53,9 +53,9 @@ defmodule Collidex.Detection.PolySATTest do
       |> Enum.each(fn({name1, name2}) ->
         shape1 = Map.fetch!(fixtures, name1)
         shape2 = Map.fetch!(fixtures, name2)
-        assert PolySAT.collision?(shape1, shape2),
+        assert Polygons.collision?(shape1, shape2),
           "Expected a collision between shapes #{name1} and #{name2}"
-        assert PolySAT.collision?(shape2, shape1),
+        assert Polygons.collision?(shape2, shape1),
           "Expected a collision between shapes #{name2} and #{name1}"
       end)
     end
@@ -67,9 +67,9 @@ defmodule Collidex.Detection.PolySATTest do
       |> Enum.each(fn({name1, name2}) ->
         shape1 = Map.fetch!(fixtures, name1)
         shape2 = Map.fetch!(fixtures, name2)
-        refute PolySAT.collision?(shape1, shape2),
+        refute Polygons.collision?(shape1, shape2),
           "Expected no collision between shapes #{name1} and #{name2}"
-        refute PolySAT.collision?(shape2, shape1),
+        refute Polygons.collision?(shape2, shape1),
           "Expected no collision between shapes #{name1} and #{name2}"
       end)
     end

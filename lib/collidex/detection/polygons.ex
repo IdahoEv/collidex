@@ -1,4 +1,4 @@
-defmodule Collidex.Detection.PolySAT do
+defmodule Collidex.Detection.Polygons do
   @moduledoc """
   Detects collisions between polygons using the separating
   axis theorem.  Has two variants, :fast and :accurate.  :fast
@@ -15,10 +15,10 @@ defmodule Collidex.Detection.PolySAT do
 
   if :fast is passed as the third argument, this function will use the
   shortcut method of only checking one axis: the centroid-to-centroid
-  axis. This method is much faster and will correctly detect the vast
-  majority of collisions, but will occasionally return a false positive
-  for almost-colliding acute polygons (particularly triangles) at skew
-  angles. 
+  axis. This method is faster (at least as fast, with much better worst-case
+  performance) and will correctly detect the vast  majority of collisions,
+  but will occasionally return a false positive for almost-colliding acute
+  polygons (particularly triangles) at skew angles.
   """
   def collision?(poly1, poly2, type \\ :accurate)
 
