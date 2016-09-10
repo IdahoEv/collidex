@@ -24,7 +24,6 @@ defmodule Collidex.Detection.PolySATTest do
       # when projected onto the centroid-centroid axis
       [{:a,:b}, {:a,:c}, {:a, :d}, {:d, :e}, {:f, :g} ]
       |> Enum.each(fn({name1, name2}) ->
-        IO.puts("Testing #{name1} against #{name2}")
         shape1 = Map.fetch!(fixtures, name1)
         shape2 = Map.fetch!(fixtures, name2)
         assert PolySAT.collision?(shape1, shape2, :fast),
@@ -47,33 +46,32 @@ defmodule Collidex.Detection.PolySATTest do
     end
   end
 
-  # describe "accurate collision method" do
-  #   it "detects collisions" do
-  #     fixtures = make_fixtures
-  #     [{:a,:b}, {:a,:c}, {:a, :d}, {:f, :g} ]
-  #     |> Enum.each(fn({name1, name2}) ->
-  #       IO.puts("Testing #{name1} against #{name2}")
-  #       shape1 = Map.fetch!(fixtures, name1)
-  #       shape2 = Map.fetch!(fixtures, name2)
-  #       assert PolySAT.collision?(shape1, shape2),
-  #         "Expected a collision between shapes #{name1} and #{name2}"
-  #       assert PolySAT.collision?(shape2, shape1),
-  #         "Expected a collision between shapes #{name2} and #{name1}"
-  #     end)
-  #   end
-  #   it "detects misses" do
-  #     fixtures = make_fixtures
-  #
-  #     # d and e are a miss when tested with full separating axis
-  #     [{:a,:e}, {:b,:c}, {:b, :d}, {:a, :f}, {:a, :g}, {:e, :g}, {:d, :e} ]
-  #     |> Enum.each(fn({name1, name2}) ->
-  #       shape1 = Map.fetch!(fixtures, name1)
-  #       shape2 = Map.fetch!(fixtures, name2)
-  #       refute PolySAT.collision?(shape1, shape2),
-  #         "Expected no collision between shapes #{name1} and #{name2}"
-  #       refute PolySAT.collision?(shape2, shape1),
-  #         "Expected no collision between shapes #{name1} and #{name2}"
-  #     end)
-  #   end
-  # end
+  describe "accurate collision method" do
+    it "detects collisions" do
+      fixtures = make_fixtures
+      [{:a,:b}, {:a,:c}, {:a, :d}, {:f, :g} ]
+      |> Enum.each(fn({name1, name2}) ->
+        shape1 = Map.fetch!(fixtures, name1)
+        shape2 = Map.fetch!(fixtures, name2)
+        assert PolySAT.collision?(shape1, shape2),
+          "Expected a collision between shapes #{name1} and #{name2}"
+        assert PolySAT.collision?(shape2, shape1),
+          "Expected a collision between shapes #{name2} and #{name1}"
+      end)
+    end
+    it "detects misses" do
+      fixtures = make_fixtures
+
+      # d and e are a miss when tested with full separating axis
+      [{:a,:e}, {:b,:c}, {:b, :d}, {:a, :f}, {:a, :g}, {:e, :g}, {:d, :e} ]
+      |> Enum.each(fn({name1, name2}) ->
+        shape1 = Map.fetch!(fixtures, name1)
+        shape2 = Map.fetch!(fixtures, name2)
+        refute PolySAT.collision?(shape1, shape2),
+          "Expected no collision between shapes #{name1} and #{name2}"
+        refute PolySAT.collision?(shape2, shape1),
+          "Expected no collision between shapes #{name1} and #{name2}"
+      end)
+    end
+  end
 end

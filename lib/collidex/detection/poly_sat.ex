@@ -9,36 +9,42 @@ defmodule Collidex.Detection.PolySAT do
   alias Collidex.Geometry.Polygon
 
   @doc """
-  Given two variables, determine if they appear to collide,
-  based on a single test along their centroid-to-centroid axis.
+  Determine if two polygons are colliding. Uses the separating
+  Axis Theorem, and so can only perform accurate detection for
+  convex polygons.
 
-  This clause checks only one axis, the centroid-to-centroid axis, and so
-  will report some false positives among nearly-colliding polygons.
-  However it is much faster and should be accurate enough for most
-  game-related work.
+  if :fast is passed as the third argument, this function will use the
+  shortcut method of only checking one axis: the centroid-to-centroid
+  axis. This method is much faster and will correctly detect the vast
+  majority of collisions, but will occasionally return a false positive
+  for almost-colliding acute polygons (particularly triangles) at skew
+  angles. 
   """
+  def collision?(poly1, poly2, type \\ :accurate)
+
+
   def collision?(poly1, poly2, :fast) do
     Vec2.subtract(Polygon.center(poly2), Polygon.center(poly1))
       |> collision_on_axis?(poly1, poly2)
   end
 
-  @doc """
-  Given two variables, determine if they appear to collide,
-  based on a single test along their centroid-to-centroid axis.
+  def collision?(poly1, poly2, :accurate) do
+    axes_to_test = normals_of_polygon(poly1)
+      ++ normals_of_polygon(poly2)
+    if axes_to_test |> Enum.any?(&(!collision_on_axis?(&1, poly1, poly2))) do
+      false
+    else
+      { :collision, "todo" }
+    end
+  end
 
-  This clause will report some false positives among nearly-colliding
-  polygons, but should be accurate enough for most game-related work.
-  """
-  def collision?(poly1, poly2, type \\ :accurate) do
-    {_, axes_to_test} = poly1.vertices
-      ++ [ Enum.last(poly2.vertices)]
-      ++ poly2.vertices
-      |> Enum.reduce({Enum.last(poly1.vertices),[]},
-        fn(vertex, {prev, list}) ->
+  defp normals_of_polygon(poly) do
+    { _, sides } = poly.vertices
+      |> Enum.reduce( {List.last(poly.vertices), []},
+        fn (vertex, {prev, list}) ->
           {vertex, [ Vec2.subtract(vertex, prev) | list] }
         end )
-    # axes_to_test
-    #   |> Enum.any?()
+    sides |> Enum.map(&(Vec2.perp(&1)))
   end
 
   defp collision_on_axis?(axis, poly1, poly2) do
