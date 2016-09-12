@@ -12,7 +12,16 @@ defmodule Collidex.Geometry.Rect do
   iex> Collidex.Geometry.Rect.make({ 1, 2, 50.1, 51.1 })
   %Collidex.Geometry.Rect{a: {1, 2}, b: { 50.1, 51.1}}
   """
-  def make({ x1, y1, x2, y2 })
+  def make({ x1, y1, x2, y2 }), do: make({x1, y1}, {x2, y2})
+  
+  @doc """
+  Make a rect from a pair of points: {x1, y1}, {x2, y2}
+
+  ## Example
+  iex> Collidex.Geometry.Rect.make({ 1, 2}, {50.1, 51.1 })
+  %Collidex.Geometry.Rect{a: {1, 2}, b: { 50.1, 51.1}}
+  """
+  def make({ x1, y1}, { x2, y2 })
     when is_number(x1)
       and is_number(y1)
       and is_number(x2)
@@ -23,7 +32,6 @@ defmodule Collidex.Geometry.Rect do
                 }
   end
 
-
   @doc """
   Make a rect from four arguments: x1, y1, x2, y2
 
@@ -31,7 +39,7 @@ defmodule Collidex.Geometry.Rect do
   iex> Collidex.Geometry.Rect.make( 1, 2, 50.1, 51.1 )
   %Collidex.Geometry.Rect{a: { 1, 2}, b: {50.1, 51.1}}
   """
-  def make( x1, y1, x2, y2 ), do: make {x1, y1, x2, y2}
+  def make( x1, y1, x2, y2 ), do: make {x1, y1}, {x2, y2}
 
   def center(%__MODULE__{ a: { x1, y1}, b: { x2, y2 }}) do
     {(x1 + x2)/2.0, (y1 + y2)/2.0}

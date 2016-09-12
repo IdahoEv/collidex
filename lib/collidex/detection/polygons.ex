@@ -34,7 +34,7 @@ defmodule Collidex.Detection.Polygons do
     if axes_to_test |> Enum.any?(&(!collision_on_axis?(&1, poly1, poly2))) do
       false
     else
-      { :collision, "todo" }
+      { :collision, "todo_provide_vector" }
     end
   end
 
@@ -56,7 +56,7 @@ defmodule Collidex.Detection.Polygons do
       |> Enum.map(&(Enum.min_max(&1)))
       |> overlap?
     if collision do
-       { :collision, "foo" }
+       { :collision, "todo_provide_vector" }
     else
       false
     end
