@@ -28,6 +28,17 @@ defmodule Collidex.Detection.MixedShapes do
   end
 
   @doc """
+  Detect collisions between Rects and Circles by promoting Rects
+  to polygons.
+  """
+  def collision?(rect = %Rect{}, circle = %Circle{}, method ) do
+    collision?(Polygon.make(rect), circle, method)
+  end
+  def collision?(circle = %Circle{}, rect = %Rect{}, method ) do
+    collision?(circle, Polygon.make(rect), method)
+  end
+
+  @doc """
   Detect collisions between Circles and Polygons. Requires
   a special case of the separating axis theorem.
 

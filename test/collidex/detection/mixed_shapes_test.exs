@@ -26,6 +26,33 @@ defmodule TestMixedShapes do
     }
   end
 
+  describe "Circles and Rects" do
+    it "detects collisions" do
+      fixtures = make_fixtures
+      assert MixedShapes.collision?(fixtures.r1,fixtures.c1)
+      assert MixedShapes.collision?(fixtures.r3,fixtures.c2)
+
+      assert MixedShapes.collision?(fixtures.c1,fixtures.r1)
+      assert MixedShapes.collision?(fixtures.c2,fixtures.r3)
+    end
+    it "detects misses" do
+      fixtures = make_fixtures
+      refute MixedShapes.collision?(fixtures.c1, fixtures.f)
+      [{:c1, :r2}, {:c1, :r3},
+       {:c2, :r1}, {:c2, :r2},
+       {:c3, :r1}, {:c3, :r2}, {:c, :r3}
+      ]
+      |> Enum.each(fn({name1, name2}) ->
+        shape1 = Map.fetch!(fixtures, name1)
+        shape2 = Map.fetch!(fixtures, name2)
+        refute MixedShapes.collision?(shape1, shape2),
+          "Expected no collision between shapes #{name1} and #{name2}"
+        refute MixedShapes.collision?(shape2, shape1),
+          "Expected no collision between shapes #{name1} and #{name2}"
+      end)
+    end
+  end
+
   describe "Circles and polygons" do
     it "detects simple collision" do
       assert MixedShapes.collision?(
