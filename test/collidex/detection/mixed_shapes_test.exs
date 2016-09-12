@@ -19,8 +19,50 @@ defmodule TestMixedShapes do
       g: Polygon.make([{196.3,201.52},{202.75,185.00},{225.25,190.49},{220.76,206.75}]),
       r1: Rect.make(100.93, 213, 122.73, 205.22),
       r2: Rect.make(173.0, 163.7, 140.12, 146.45),
-      r3: Rect.make(188.25, 266.25, 203, 279)
+      r3: Rect.make(188.25, 266.25, 203, 279),
+      c1: Circle.make(112.73, 219.33, 10),
+      c2: Circle.make(195.763, 272.326, 25),
+      c3: Circle.make(243.18, 141.823, 25)
     }
+  end
+
+  describe "Circles and polygons" do
+    it "detects simple collision" do
+      assert MixedShapes.collision?(
+        Circle.make(0.0,0.0,1.0),
+        Polygon.make([{1,0}, {2,1}, {3,0}, {2,-1}])
+      )
+    end
+    it "detects simple miss" do
+      refute MixedShapes.collision?(
+        Circle.make(0.0,0.0,1.0),
+        Polygon.make([{1.5,0}, {2,1}, {3,0}, {2,-1}])
+      )
+    end
+    it "detects collisions" do
+      fixtures = make_fixtures
+      assert MixedShapes.collision?(fixtures.c2,fixtures.f)
+      assert MixedShapes.collision?(fixtures.c3,fixtures.e)
+
+      assert MixedShapes.collision?(fixtures.f,fixtures.c2)
+      assert MixedShapes.collision?(fixtures.e,fixtures.c3)
+    end
+    it "detects misses" do
+      fixtures = make_fixtures
+      refute MixedShapes.collision?(fixtures.c1, fixtures.f)
+      [{ :c1, :b}, { :c1, :c}, { :c1, :d}, { :c1, :e}, { :c1, :f}, { :c1, :g},
+       { :c2, :a}, { :c2, :b}, { :c2, :c}, { :c2, :d}, { :c2, :e}, { :c2, :g},
+       { :c3, :a}, { :c3, :b}, { :c3, :c}, { :c3, :d}, { :c3, :f}, { :c3, :g},
+      ]
+      |> Enum.each(fn({name1, name2}) ->
+        shape1 = Map.fetch!(fixtures, name1)
+        shape2 = Map.fetch!(fixtures, name2)
+        refute MixedShapes.collision?(shape1, shape2),
+          "Expected no collision between shapes #{name1} and #{name2}"
+        refute MixedShapes.collision?(shape2, shape1),
+          "Expected no collision between shapes #{name1} and #{name2}"
+      end)
+    end
   end
 
   describe "Rectangles and polygons" do
