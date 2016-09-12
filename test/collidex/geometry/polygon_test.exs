@@ -24,7 +24,10 @@ defmodule TestPolygon do
         %Polygon{ vertices: vertices2} = poly2
 
         # Polygons are assumed convex, so vertex order is
-        # unimportant.
+        # mostly unimportant.  (Not strictly true: a bowtie
+        # of the rect's corners would be a bad polygon for
+        # collision purposes).  May add a test for that at
+        # some point but it feels overkill at the moment.
         assert correct_vertices -- vertices1 == []
         assert correct_vertices -- vertices2 == []
       end
