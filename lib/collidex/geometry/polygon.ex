@@ -16,6 +16,13 @@ defmodule Collidex.Geometry.Polygon do
   end
 
   @doc """
+  Make a polygon from a grid-aligned rectangle.
+  """
+  def make(%Collidex.Geometry.Rect{ a: {ax, ay}, b: {bx, by}}) do
+    make [{ax,ay}, {ax, by}, {bx, by}, {bx, ay}]
+  end
+
+  @doc """
   computes the centroid of a polygon by accumulating an average of the vertices.
   """
   def center(polygon) do
