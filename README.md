@@ -54,9 +54,12 @@ iex(2)> Collidex.Geometry.Rect.make(0.0, 0.0, 1.0, 1.0)
 #### `Polygon`s
 
 Specify polygons as an array of vectors:
+
+```
 iex(3)> Collidex.Geometry.Polygon.make([{0.0, 0.0}, {1.0, 1.0}, {2.0, 0.0}, {1.0, -1.0}])
 %Collidex.Geometry.Polygon{vertices: [{0.0, 0.0}, {1.0, 1.0}, {2.0, 0.0},
   {1.0, -1.0}]}
+```
 
 ### Detecting Collisions Between primitives
 
@@ -65,7 +68,7 @@ value indicates that they overlap on the plane. The third argument is an
 optional atom representing the detection method for Polygon-to-Polygon collisions
 and defaults to :accurate. For faster but less accurate comparisons, specify :fast.
 
-### Detecting collisions between and with in lists of primitives
+### Detecting collisions between and within lists of primitives
 
 ... coming soon
 
