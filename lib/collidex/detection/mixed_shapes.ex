@@ -18,6 +18,18 @@ defmodule Collidex.Detection.MixedShapes do
   TODO: Test if a special case treatment of rects-to-polygons
   without promoting the rects has sufficiently better performance
   to justify it.
+
+  ## Examples
+  iex(14)> MixedShapes.collision?(
+  ...(14)>   Rect.make(-1.0, -1.0, 1.0, 1.0),
+  ...(14)>   Polygon.make([{0.9,0}, {2,1}, {2,-1}])
+  ...(14)> )
+  {:collision, "todo"}
+  iex(15)> MixedShapes.collision?(
+  ...(15)>   Rect.make(-1.0, -1.0, 1.0, 1.0),
+  ...(15)>   Polygon.make([{1.1,0}, {2,1}, {2,-1}])
+  ...(15)> )
+  false
   """
   def collision?(shape1, shape2, method \\ :accurate)
   def collision?(rect = %Rect{}, poly = %Polygon{}, method ) do
@@ -30,6 +42,18 @@ defmodule Collidex.Detection.MixedShapes do
   @doc """
   Detect collisions between Rects and Circles by promoting Rects
   to polygons.
+
+  ## Examples
+  iex(7)> Collidex.Detection.MixedShapes.collision?(
+  ...(7)>   Collidex.Geometry.Circle.make(0,0,1.0),
+  ...(7)>   Collidex.Geometry.Rect.make(1,-1,2,1)
+  ...(7)> )
+  {:collision, "todo_provide_vector"}
+  iex(8)> Collidex.Detection.MixedShapes.collision?(
+  ...(8)>   Collidex.Geometry.Circle.make(0,0,1.0),
+  ...(8)>   Collidex.Geometry.Rect.make(1.1,-1,2,1)
+  ...(8)> )
+  false
   """
   def collision?(rect = %Rect{}, circle = %Circle{}, method ) do
     collision?(Polygon.make(rect), circle, method)
@@ -44,6 +68,21 @@ defmodule Collidex.Detection.MixedShapes do
 
   Method :fast and :accurate are ignored for circle-to-polygon
   collisions because there is only one axis to test.
+
+  ## Examples
+
+  iex(5)> Collidex.Detection.MixedShapes.collision?(
+  ...(5)>   Collidex.Geometry.Circle.make(0,0,1.0),
+  ...(5)>   Collidex.Geometry.Polygon.make([{0.9,0}, {2,1}, {2,-1}])
+  ...(5)> )
+  {:collision, "todo_provide_vector"}
+
+  iex(6)> Collidex.Detection.MixedShapes.collision?(
+  ...(6)>   Collidex.Geometry.Circle.make(0,0,1.0),
+  ...(6)>   Collidex.Geometry.Polygon.make([{1.1,0}, {2,1}, {2,-1}])
+  ...(6)> )
+  false
+
   """
   def collision?(poly = %Polygon{}, circle = %Circle{}, _method) do
     collision?(circle, poly)
