@@ -15,6 +15,7 @@ defmodule Collidex.Detector do
   alias Collidex.Detection.Polygons
   alias Collidex.Detection.MixedShapes
 
+
   @doc """
   Determine if two shapes collide on the plane.  If the two shapes do not
   overlap, the return value will be falsy.  If they do overlap,
@@ -48,8 +49,8 @@ defmodule Collidex.Detector do
   {:collision, "todo_provide_vector"}
 
   iex> Collidex.Detector.collision?(
-  ...>   Rect.make(-1.0, -1.0, 1.0, 1.0),
-  ...>   Polygon.make([{0.9,0}, {2,1}, {2,-1}])
+  ...>   Collidex.Geometry.Rect.make(-1.0, -1.0, 1.0, 1.0),
+  ...>   Collidex.Geometry.Polygon.make([{0.9,0}, {2,1}, {2,-1}])
   ...> )
   {:collision, "todo_provide_vector"}
 
@@ -61,7 +62,7 @@ defmodule Collidex.Detector do
 
   """
   def collision?(shape1, shape2, method \\ :accurate)
-  
+
   def collision?(c1 = %Circle{}, c2 = %Circle{}, _) do
     Circles.collision?(c1,c2)
   end

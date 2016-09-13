@@ -89,34 +89,46 @@ defmodule Collidex.Detection.MixedShapes do
   end
   def collision?(circle = %Circle{}, poly = %Polygon{}, _method) do
     center = circle.center
-    closest = poly.vertices
+    closest_vertex = poly.vertices
       |> Enum.sort_by(&(Vec2.length(Vec2.subtract(&1, center))))
       |> List.first
-    { ax, ay} = Vec2.subtract(center, closest)
+    close_vertex_axis = Vec2.subtract(center, closest_vertex)
 
-    # Make a unit-length projection axis so the circle radius is meaningful
-    axis = { ax / Vec2.length({ax, ay}), ay / Vec2.length({ax, ay}) }
+    all_axes = [close_vertex_axis | Polygons.normals_of_polygon(poly)]
 
-    polygon_projected_bounds = poly.vertices
-      |> Enum.map(&(Vec2.dot(&1, axis)))
-      |> Enum.min_max
+    if all_axes
+      |> Enum.find(false, fn({axis_x, axis_y} = axis) ->
 
-    projected_center = Vec2.dot(center, axis)
-    circle_projected_bounds = {
-      projected_center + circle.radius,
-      projected_center - circle.radius,
-    }
+          IO.puts "Testing Axis:"
+          IO.inspect axis
+          # Make unit-length projection axes so the circle radius is meaningful
+          len = Vec2.length(axis)
+          unit_axis = {axis_x / len, axis_y / len}
 
-    # TODO refactor into utility module
-    if Collidex.Detection.Polygons.overlap?([
-      circle_projected_bounds,
-      polygon_projected_bounds
-    ]) do
-      { :collision, "todo_provide_vector"}
-    else
+          polygon_projected_bounds = poly.vertices
+            |> Enum.map(&(Vec2.dot(&1, axis)))
+            |> Enum.min_max
+
+          projected_center = Vec2.dot(center, axis)
+          circle_projected_bounds = {
+            projected_center + circle.radius,
+            projected_center - circle.radius,
+          }
+
+          if !Collidex.Detection.Polygons.overlap?([
+            circle_projected_bounds,
+            polygon_projected_bounds
+          ]) do
+            IO.puts "no collision"
+            true
+          else
+            IO.puts "this axis overlaps"
+            false
+          end
+    end) do
       false
+    else
+      { :collision, "todo_provide_vector" }
     end
   end
-
-
 end

@@ -38,7 +38,7 @@ defmodule Collidex.Detection.Polygons do
     end
   end
 
-  defp normals_of_polygon(poly) do
+  def normals_of_polygon(poly) do
     { _, sides } = poly.vertices
       |> Enum.reduce( {List.last(poly.vertices), []},
         fn (vertex, {prev, list}) ->

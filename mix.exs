@@ -4,7 +4,7 @@ defmodule Collidex.Mixfile do
   def project do
     [app: :collidex,
      version: "0.1.0",
-     elixir: "~> 1.3",
+     elixir: ">= 1.2.0",
      description: "A 2D shape collision detection library",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -37,7 +37,8 @@ defmodule Collidex.Mixfile do
       { :triq, github: "triqng/triq", only: :test},
       { :ex_spec, ">= 0.0.0", only: :test },
       { :mix_test_watch, "~> 0.2", only: :dev},
-      { :excoveralls, "~> 0.5", only: :test }
+      { :excoveralls, "~> 0.5", only: :test },
+      { :inch_ex, only: :docs}
     ]
   end
 end

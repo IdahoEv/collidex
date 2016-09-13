@@ -9,7 +9,9 @@ defmodule TestPolygon do
     context "from a list of points" do
       poly = Polygon.make([{0,0}, {1,0}, {1,1}, {1.5,0.5}, {1,0}])
       assert is_map(poly) == true
-      assert poly == %Polygon{ vertices: [{0,0}, {1,0}, {1,1}, {1.5,0.5}, {1,0}] }
+      assert poly == %Polygon{
+        vertices: [{0.0,0.0}, {1.0,0.0}, {1.0,1.0}, {1.5,0.5}, {1.0,0.0}]
+      }
     end
 
     context "from a rect" do
@@ -19,7 +21,7 @@ defmodule TestPolygon do
         rect2 = Rect.make(0,1,1,0)
         poly2 = Polygon.make(rect2)
 
-        correct_vertices = [{0,0}, {0,1}, {1,0}, {1,1}]
+        correct_vertices = [{0.0,0.0}, {0.0,1.0}, {1.0,0.0}, {1.0,1.0}]
         %Polygon{ vertices: vertices1} = poly1
         %Polygon{ vertices: vertices2} = poly2
 
@@ -51,7 +53,9 @@ defmodule TestPolygon do
 
   describe "center" do
     context "of a (grid-aligned) rectangle" do
-      {x, y} = Polygon.center(Polygon.make([{1,1}, {1,-1}, {-1,-1}, {-1, 1}]))
+      {x, y} = Polygon.center(
+        Polygon.make([{1.0,1.0}, {1.0,-1.0}, {-1.0,-1.0}, {-1.0, 1.0}])
+      )
       assert_in_delta(x, 0.0, 0.00001)
       assert_in_delta(y, 0.0, 0.00001)
     end

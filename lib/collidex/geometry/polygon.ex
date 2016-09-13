@@ -12,7 +12,7 @@ defmodule Collidex.Geometry.Polygon do
   %Collidex.Geometry.Polygon{vertices: [{1,2}, {2, 2}, {2,0}, {1,0} ]}
   """
   def make(vertices) when is_list(vertices) do
-    %__MODULE__{ vertices: vertices }
+    %__MODULE__{ vertices: Collidex.Utils.coerce_floats(vertices) }
   end
 
   @doc """
