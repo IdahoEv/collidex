@@ -8,7 +8,10 @@ defmodule Collidex.Mixfile do
      description: "A 2D shape collision detection library",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     test_coverage: [ tool: ExCoveralls ],
+     preferred_cli_env: [coveralls: :test]
+   ]
   end
 
   # Configuration for the OTP application
@@ -30,10 +33,11 @@ defmodule Collidex.Mixfile do
   defp deps do
     [
       { :graphmath, "~> 1.0.2" },
-      { :excheck, "~> 0.5.0", only: :test},
+      # { :excheck, "~> 0.5.0", only: :test},
       { :triq, github: "triqng/triq", only: :test},
-      { :ex_spec, only: :test },
-      { :mix_test_watch, "~> 0.2", only: :dev}
+      { :ex_spec, ">= 0.0.0", only: :test },
+      { :mix_test_watch, "~> 0.2", only: :dev},
+      { :excoveralls, "~> 0.5", only: :test }
     ]
   end
 end
