@@ -76,7 +76,20 @@ in the docs for `Collidex.Detector.Polygons`.
 
 ### Detecting collisions between and within lists of primitives
 
-... coming soon
+Checking for collisions between lists of geometric shapes:
+
+```
+Collidex.ListDetector.find_collisions(list_1, list_2, method \\ :accurate)
+```
+
+Will return a list of 3-tuples of the form `{ shape_1, shape_2, _ }` representing
+pairs of shapes that intersect on the plane.
+
+For collisions between elements of a single list, use 'find_collisions_within/2':
+
+```
+Collidex.ListDetector.find_collisions_within(list, method \\ :accurate)
+```
 
 ## Installation
 
