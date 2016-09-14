@@ -93,39 +93,19 @@ defmodule Collidex.Detection.MixedShapes do
     closest_vertex = poly.vertices
       |> Enum.sort_by(&(Vec2.length(Vec2.subtract(&1, center))))
       |> List.first
-    close_vertex_axis = Vec2.subtract(center, closest_vertex)
 
+    close_vertex_axis = Vec2.subtract(center, closest_vertex)
     all_axes = [close_vertex_axis | Utils.normals_of_edges(poly)]
 
     if all_axes
       |> Enum.find(false, fn({axis_x, axis_y} = axis) ->
+        # Make unit-length projection axes so the circle radius is meaningful
+        unit_axis = Utils.unit_vector({axis_x, axis_y})
 
-          IO.puts "Testing Axis:"
-          IO.inspect axis
-          # Make unit-length projection axes so the circle radius is meaningful
-          len = Vec2.length(axis)
-          unit_axis = {axis_x / len, axis_y / len}
+        polygon_projection = Utils.extent_on_axis(poly, unit_axis)
+        circle_projection = Utils.extent_on_axis(circle, unit_axis)
 
-          polygon_projected_bounds = poly.vertices
-            |> Enum.map(&(Vec2.dot(&1, axis)))
-            |> Enum.min_max
-
-          projected_center = Vec2.dot(center, axis)
-          circle_projected_bounds = {
-            projected_center + circle.radius,
-            projected_center - circle.radius,
-          }
-
-          if !Utils.overlap?([
-            circle_projected_bounds,
-            polygon_projected_bounds
-          ]) do
-            IO.puts "no collision"
-            true
-          else
-            IO.puts "this axis overlaps"
-            false
-          end
+        !Utils.overlap?(circle_projection, polygon_projection)
     end) do
       false
     else

@@ -3,6 +3,8 @@ defmodule Collidex.Utils do
   Assorted utilities and geometric transformations.
   """
   alias Collidex.Geometry.Polygon
+  alias Collidex.Geometry.Rect
+  alias Collidex.Geometry.Circle
   alias Graphmath.Vec2
 
   @doc """
@@ -40,6 +42,24 @@ defmodule Collidex.Utils do
     overlap?(tuple1, tuple2)
   end
 
+  def project_onto_axis(poly = %Polygon{}, axis ) do
+    poly.vertices |> Enum.map(&(Vec2.dot(&1,axis)))
+  end
+  def project_onto_axis(r = %Rect{}, axis) do
+    project_onto_axis(Polygon.make(r), axis)
+  end
+
+
+  def extent_on_axis(circle = %Circle{}, axis) do
+    # TODO raise an exception if this isn't a unit vector axis
+    projected_center = Vec2.dot(circle.center, axis)
+    { projected_center - circle.radius,
+      projected_center + circle.radius }
+  end
+  def extent_on_axis(shape, axis ) do
+    project_onto_axis(shape, axis) |> Enum.min_max
+  end
+
   @doc """
   Returns the unit-length version of the vector passed as
   an argument.
@@ -52,7 +72,6 @@ defmodule Collidex.Utils do
   defp in_range?(a,b,c) when b > c do
     in_range?(a,c,b)
   end
-
   defp in_range?(a,b,c) do
     a >= b and a <= c
   end
