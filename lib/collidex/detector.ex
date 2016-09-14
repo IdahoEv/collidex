@@ -62,7 +62,6 @@ defmodule Collidex.Detector do
 
   """
   def collision?(shape1, shape2, method \\ :accurate)
-
   def collision?(c1 = %Circle{}, c2 = %Circle{}, _) do
     Circles.collision?(c1,c2)
   end

@@ -4,11 +4,11 @@ defmodule Collidex.Mixfile do
   def project do
     [app: :collidex,
      version: "0.1.0",
-     elixir: ">= 1.2.0",
+     elixir: "~> 1.3.0",
      description: "A 2D shape collision detection library",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps(),
+     deps: deps(Mix.env),
      test_coverage: [ tool: ExCoveralls ],
      preferred_cli_env: [coveralls: :test]
    ]
