@@ -3,6 +3,10 @@ defmodule Collidex.Detection.Circles do
   Detect collisions (or not) between pairs of circles
   """
 
+  @doc """
+  Check for a collision between two circles c1 and c2. Return
+  value is truthy if the two circles overlap on the plane.
+  """
   def collision?(c1, c2) do
     limit = c1.radius + c2.radius
     {c1x, c1y} = c1.center
