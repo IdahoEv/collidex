@@ -18,6 +18,46 @@ defmodule Collidex.Utils do
     sides |> Enum.map(&(Vec2.perp(&1)))
   end
 
+  @doc """
+  Given two numeric ranges {a1, a2}, {b1, b2}, returns
+  true if those ranges overlap.
+
+  ## Examples
+  iex> Collidex.Utils.overlap?({0.0,5.0}, {5.0, 10.0})
+  true
+  iex> Collidex.Utils.overlap?({-1.0, -3.0}, {-6.1, 3.5})
+  true
+  iex> Collidex.Utils.overlap?({-1.0, 0.0}, {0.01, 1.0} )
+  false
+  """
+  def overlap?({min1, max1}, {min2, max2}) do
+    in_range?(min1, min2, max2)
+      or in_range?(max1, min2, max2)
+      or in_range?(min2, min1, max1)
+      or in_range?(max2, min1, max1)
+  end
+  def overlap?([tuple1, tuple2]) do
+    overlap?(tuple1, tuple2)
+  end
+
+  @doc """
+  Returns the unit-length version of the vector passed as
+  an argument.
+  """
+  def unit_vector({x,y}) do
+    len = Vec2.length({x,y})
+    {x / len, y / len}
+  end
+
+  defp in_range?(a,b,c) when b > c do
+    in_range?(a,c,b)
+  end
+
+  defp in_range?(a,b,c) do
+    a >= b and a <= c
+  end
+
+
 
   @doc """
   Convert the numeric parts of arguments to floats.  Accepts

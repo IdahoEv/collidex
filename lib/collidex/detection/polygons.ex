@@ -7,6 +7,7 @@ defmodule Collidex.Detection.Polygons do
 
   alias Graphmath.Vec2
   alias Collidex.Geometry.Polygon
+  alias Collidex.Utils
 
   @doc """
   Determine if two polygons are colliding. Uses the separating
@@ -29,22 +30,13 @@ defmodule Collidex.Detection.Polygons do
   end
 
   def collision?(poly1, poly2, :accurate) do
-    axes_to_test = normals_of_polygon(poly1)
-      ++ normals_of_polygon(poly2)
+    axes_to_test = Utils.normals_of_edges(poly1)
+      ++ Utils.normals_of_edges(poly2)
     if axes_to_test |> Enum.any?(&(!collision_on_axis?(&1, poly1, poly2))) do
       false
     else
       { :collision, "todo_provide_vector" }
     end
-  end
-
-  def normals_of_polygon(poly) do
-    { _, sides } = poly.vertices
-      |> Enum.reduce( {List.last(poly.vertices), []},
-        fn (vertex, {prev, list}) ->
-          {vertex, [ Vec2.subtract(vertex, prev) | list] }
-        end )
-    sides |> Enum.map(&(Vec2.perp(&1)))
   end
 
   defp collision_on_axis?(axis, poly1, poly2) do
@@ -54,28 +46,12 @@ defmodule Collidex.Detection.Polygons do
           Enum.map(vertices, &(Vec2.dot(&1, axis)))
         end)
       |> Enum.map(&(Enum.min_max(&1)))
-      |> overlap?
+      |> Utils.overlap?
     if collision do
        { :collision, "todo_provide_vector" }
     else
       false
     end
-  end
-
-
-  def overlap?([{min1, max1}, {min2, max2}]) do
-    in_range?(min1, min2, max2)
-      or in_range?(max1, min2, max2)
-      or in_range?(min2, min1, max1)
-      or in_range?(max2, min1, max1)
-  end
-
-  defp in_range?(a,b,c) when b > c do
-    in_range?(a,c,b)
-  end
-
-  defp in_range?(a,b,c) do
-    a >= b and a <= c
   end
 
 end

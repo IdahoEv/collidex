@@ -10,6 +10,7 @@ defmodule Collidex.Detection.MixedShapes do
   alias Graphmath.Vec2
 
   alias Collidex.Detection.Polygons
+  alias Collidex.Utils
 
   @doc """
   Detect collisions between Rects and Polygons by promoting
@@ -94,7 +95,7 @@ defmodule Collidex.Detection.MixedShapes do
       |> List.first
     close_vertex_axis = Vec2.subtract(center, closest_vertex)
 
-    all_axes = [close_vertex_axis | Polygons.normals_of_polygon(poly)]
+    all_axes = [close_vertex_axis | Utils.normals_of_edges(poly)]
 
     if all_axes
       |> Enum.find(false, fn({axis_x, axis_y} = axis) ->
@@ -115,7 +116,7 @@ defmodule Collidex.Detection.MixedShapes do
             projected_center - circle.radius,
           }
 
-          if !Collidex.Detection.Polygons.overlap?([
+          if !Utils.overlap?([
             circle_projected_bounds,
             polygon_projected_bounds
           ]) do

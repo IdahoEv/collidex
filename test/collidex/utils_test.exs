@@ -17,4 +17,15 @@ defmodule Collidex.TestUtils do
     end
   end
 
+  describe "unit_vector" do
+    it "returns a unit-length vector in the same direction as its argument" do
+      assert {1.0, 0.0} == Utils.unit_vector({1.0,0.0})
+      assert {0.0, -1.0} == Utils.unit_vector({0.0,-20.0})
+
+      {x, y} = Utils.unit_vector({5.0,5.0})
+      assert_in_delta x, 1.4142135623730951, 0.01
+      assert_in_delta y, 1.4142135623730951, 0.01
+    end
+  end
+
 end
