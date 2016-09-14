@@ -29,8 +29,8 @@ defmodule Collidex.Mixfile do
       maintainers: ["Evan Dorn"],
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/idahoev/collidex"
-
+        "GitHub" => "https://github.com/idahoev/collidex",
+        "Docs" => "https://hexdocs.pm/collidex"
       }
     ]
   end

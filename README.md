@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/IdahoEv/collidex.svg?branch=master)](https://travis-ci.org/IdahoEv/collidex)
 [![Coverage Status](https://coveralls.io/repos/github/IdahoEv/collidex/badge.svg?branch=master)](https://coveralls.io/github/IdahoEv/collidex?branch=master)
+[![Hex.pm](https://img.shields.io/hexpm/v/collidex.svg)](https://hex.pm/packages/collidex)
 
 Collidex is an in-development 2D geometry collision detection library in pure
 Elixir. It supports circles, grid-aligned rectangles, and convex polygons. When
