@@ -67,10 +67,12 @@ iex(3)> Collidex.Geometry.Polygon.make([{0.0, 0.0}, {1.0, 1.0}, {2.0, 0.0}, {1.0
 
 ### Detecting Collisions Between primitives
 
-Pass any pair of primitives to Collidex.Detector.collision?/3. A truthy return
-value indicates that they overlap on the plane. The third argument is an
-optional atom representing the detection method for Polygon-to-Polygon collisions
-and defaults to :accurate. For faster but less accurate comparisons, specify :fast.
+Pass any pair of geometric shapes, as represented by Collidex structs, to
+`Collidex.Detector.collision?/3`. A truthy return value indicates that they
+overlap on the plane. The third argument is an optional atom representing the
+detection method for Polygon-to-Polygon collisions and defaults to `:accurate`.
+For faster but less accurate comparisons, specify `:fast`.  See details
+in the docs for `Collidex.Detector.Polygons`.
 
 ### Detecting collisions between and within lists of primitives
 
@@ -80,19 +82,11 @@ and defaults to :accurate. For faster but less accurate comparisons, specify :fa
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add `collidex` to your list of dependencies in `mix.exs`:
+  Add `collidex` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
       [{:collidex, "~> 0.1.1"}]
-    end
-    ```
-
-  2. Ensure `collidex` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:collidex]]
     end
     ```
 
