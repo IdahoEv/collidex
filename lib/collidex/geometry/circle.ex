@@ -14,11 +14,14 @@ defmodule Collidex.Geometry.Circle do
 
   ## Examples
 
+  ```
   iex> Collidex.Geometry.Circle.make({5,5,0.75})
   %Collidex.Geometry.Circle{center: { 5.0, 5.0}, radius: 0.75}
 
   iex> Collidex.Geometry.Circle.make(2,1,0.5)
   %Collidex.Geometry.Circle{center: {2.0, 1.0}, radius: 0.500}
+  
+  ```
   """
   def make({ x, y, r }) when is_number(x) and is_number(y) and is_number(r)
   do

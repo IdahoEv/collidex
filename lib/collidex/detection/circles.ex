@@ -6,6 +6,23 @@ defmodule Collidex.Detection.Circles do
   @doc """
   Check for a collision between two circles c1 and c2. Return
   value is truthy if the two circles overlap on the plane.
+
+  ## Examples
+
+  ```
+  iex> Collidex.Detection.Circles.collision?(
+  ...>   Collidex.Geometry.Circle.make(0.0, 0.0, 1.0),
+  ...>   Collidex.Geometry.Circle.make(1.0, 1.0, 1.0)
+  ...> )
+  { :collision, {-1.0, -1.0} }
+
+  iex> Collidex.Detection.Circles.collision?(
+  ...>   Collidex.Geometry.Circle.make(0.0, 0.0, 1.0),
+  ...>   Collidex.Geometry.Circle.make(3.0, 3.0, 1.0)
+  ...> )
+  false
+
+  ```
   """
   def collision?(c1, c2) do
     limit = c1.radius + c2.radius

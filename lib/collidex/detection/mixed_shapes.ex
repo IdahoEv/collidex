@@ -13,21 +13,25 @@ defmodule Collidex.Detection.MixedShapes do
   alias Collidex.Utils
 
   @doc """
-  Detect collisions between any two shapes not of the same type.
+  Check for collisions between any two shapes not of the same type.  Return
+  value is truthy if the shapes overlap on the plane.
+
   `method` defaults to :accurate and is ignored if any of the shapes
-  are circles.
+  are circles. See Collidex.Detection.Polygons for an explanation of
+  `method`.
 
   ## Examples
 
-  iex> MixedShapes.collision?(
-  ...>   Rect.make(-1.0, -1.0, 1.0, 1.0),
-  ...>   Polygon.make([{0.9,0}, {2,1}, {2,-1}])
+  ```
+  iex> Collidex.Detection.MixedShapes.collision?(
+  ...>   Collidex.Geometry.Rect.make(-1.0, -1.0, 1.0, 1.0),
+  ...>   Collidex.Geometry.Polygon.make([{0.9,0}, {2,1}, {2,-1}])
   ...> )
   { :collision, "todo_provide_vector"}
 
-  iex> MixedShapes.collision?(
-  ...>   Rect.make(-1.0, -1.0, 1.0, 1.0),
-  ...>   Polygon.make([{1.1,0}, {2,1}, {2,-1}])
+  iex> Collidex.Detection.MixedShapes.collision?(
+  ...>   Collidex.Geometry.Rect.make(-1.0, -1.0, 1.0, 1.0),
+  ...>   Collidex.Geometry.Polygon.make([{1.1,0}, {2,1}, {2,-1}])
   ...> )
   false
 
@@ -55,6 +59,7 @@ defmodule Collidex.Detection.MixedShapes do
   ...> )
   false
 
+  ```
   """
   def collision?(shape1, shape2, method \\ :accurate)
   def collision?(rect = %Rect{}, poly = %Polygon{}, method ) do
@@ -67,12 +72,6 @@ defmodule Collidex.Detection.MixedShapes do
     Polygons.collision?(poly, Polygon.make(rect), method)
   end
 
-  @doc """
-
-
-  ## Examples
-
-  """
   def collision?(rect = %Rect{}, circle = %Circle{}, method ) do
     collision?(Polygon.make(rect), circle, method)
   end

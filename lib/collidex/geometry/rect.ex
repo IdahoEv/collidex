@@ -12,6 +12,8 @@ defmodule Collidex.Geometry.Rect do
     * A 4-tuple: e.g. { x1, y1}, {x2, y2}
 
   ## Examples
+
+  ```
   iex> Collidex.Geometry.Rect.make( 1, 2, 50.1, 51.1 )
   %Collidex.Geometry.Rect{a: {1.0, 2.0}, b: { 50.1, 51.1}}
 
@@ -20,7 +22,8 @@ defmodule Collidex.Geometry.Rect do
 
   iex> Collidex.Geometry.Rect.make({ 1, 2, 50.1, 51.1 })
   %Collidex.Geometry.Rect{a: {1.0, 2.0}, b: { 50.1, 51.1}}
-
+  
+  ```
   """
   def make({ x1, y1, x2, y2 }), do: make({x1, y1}, {x2, y2})
 

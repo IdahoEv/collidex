@@ -19,17 +19,18 @@ defmodule Collidex.Detector do
   @doc """
   Determine if two shapes collide on the plane.  If the two shapes do not
   overlap, the return value will be falsy.  If they do overlap,
-  it will return { :collision, _ }.  (The second member
+  it will return `{ :collision, _ }`.  (The second member
   of the tuple will eventually be the vector along which the two shapes
   are colliding, but that is not implented yet).
 
-  The optional third argument defaults to :accurate.  If :fast is passed
+  The optional third argument defaults to `:accurate`.  If `:fast` is passed
   instead, then Polygon-to-Polygon collisions will be tested with a method
   that may return false positives in rare cases but is faster. This
   does not affect any collisions involving Rects or Circles.
 
   ## Examples
 
+  ```
   iex> Collidex.Detector.collision?(
   ...>   Collidex.Geometry.Circle.make(0, 0, 1.0),
   ...>   Collidex.Geometry.Circle.make(1.0, 1.0, 1.0)
@@ -60,6 +61,7 @@ defmodule Collidex.Detector do
   ...> )
   false
 
+  ```
   """
   def collision?(shape1, shape2, method \\ :accurate)
   def collision?(c1 = %Circle{}, c2 = %Circle{}, _) do
@@ -68,7 +70,7 @@ defmodule Collidex.Detector do
   def collision?(r1 = %Rect{}, r2 = %Rect{}, _) do
     Rects.collision?(r1,r2)
   end
-  def collision(p1 = %Polygon{}, p2 = %Polygon{}, method) do
+  def collision?(p1 = %Polygon{}, p2 = %Polygon{}, method) do
     Polygons.collision?(p1, p2, method)
   end
   def collision?(shape1, shape2, method) do

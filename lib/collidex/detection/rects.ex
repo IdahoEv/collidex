@@ -11,6 +11,7 @@ defmodule Collidex.Detection.Rects do
   if the two rectangles share any points in common, and false otherwise.
 
   ## Examples
+  ```
   iex> Collidex.Detection.Rects.collision?(
   ...>   Collidex.Geometry.Rect.make(-2, -0.75, 2, -2),
   ...>   Collidex.Geometry.Rect.make(2, 0.5, 3, -0.5)
@@ -22,6 +23,8 @@ defmodule Collidex.Detection.Rects do
   ...> Collidex.Geometry.Rect.make(3,-3,-3,3)
   ...> )
   {:collision, "todo_provide_vector"}
+
+  ```
   """
   def collision?(r1, r2) do
     { r1x1, r1y1 } = r1.a

@@ -2,7 +2,7 @@ defmodule TestMixedShapes do
   use ExSpec, async: true
   # use ExCheck
 
-  # doctest Collidex.Detection.MixedShapes
+  doctest Collidex.Detection.MixedShapes
   alias Collidex.Detection.MixedShapes
   alias Collidex.Geometry.Rect
   alias Collidex.Geometry.Circle

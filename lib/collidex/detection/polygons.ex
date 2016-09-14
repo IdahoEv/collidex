@@ -10,16 +10,22 @@ defmodule Collidex.Detection.Polygons do
   alias Collidex.Utils
 
   @doc """
-  Determine if two polygons are colliding. Uses the separating
-  Axis Theorem, and so can only perform accurate detection for
-  convex polygons.
+  Check if two polygons intersect. Return value is true if they overlap
+  on the plane.
 
-  if :fast is passed as the third argument, this function will use the
-  shortcut method of only checking one axis: the centroid-to-centroid
-  axis. This method is faster (at least as fast, with much better worst-case
-  performance) and will correctly detect the vast  majority of collisions,
-  but will occasionally return a false positive for almost-colliding acute
-  polygons (particularly triangles) at skew angles.
+  Uses the separating Axis Theorem, and so can only perform accurate
+  detection for convex polygons.
+
+  The third argument, `method` allow you to select between a default,
+  fuly accurate implementation of the Separating Axis Theorem, or a
+  faster method that only checks for separation on a single axis.
+
+  If :fast is passed as the third argument, this function will use the
+  shortcut method of only checking the centroid-to-centroid
+  axis. This method is at least as fast, with much better worst-case
+  performance and will correctly detect the vast  majority of collisions.
+  It can, however, occasionally return a false positive for
+  almost-colliding acute polygons (particularly triangles) at skew angles.
   """
   def collision?(poly1, poly2, type \\ :accurate)
 
