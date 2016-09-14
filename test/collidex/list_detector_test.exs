@@ -88,4 +88,27 @@ defmodule TestListDetector do
      end
     end
   end
+
+  describe "find_collisions/2" do
+    it "returns [] given a list of 0 items " do
+      assert [] == ListDetector.find_collisions_within([])
+      assert [] == ListDetector.find_collisions_within([], :fast)
+    end
+    it "returns [] given a list of 1 item " do
+      a = Collidex.Geometry.Circle.make(0.0, 0.0, 1.0)
+      assert [] == ListDetector.find_collisions_within([a])
+      assert [] == ListDetector.find_collisions_within([a], :fast)
+    end
+    it "finds colliding items in a list" do
+      fix = make_fixtures
+      results = ListDetector.find_collisions_within([fix.a, fix.b, fix.c])
+      assert 2 == Enum.count(results)
+      assert Enum.find(results, fn({s1, s2, _}) ->
+        s1 == fix.a and s2 == fix.b
+      end)
+      assert Enum.find(results, fn({s1, s2, _}) ->
+        s1 == fix.a and s2 == fix.c
+      end)
+    end
+  end
 end

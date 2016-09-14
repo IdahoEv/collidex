@@ -23,7 +23,8 @@ defmodule Collidex.ListDetector do
   true
   """
   def find_collisions(list_1, list_2, method \\ :accurate )
-  def find_collisions(list_1, list_2, method) do
+  def find_collisions(list_1, list_2, method)
+    when is_list(list_1) and is_list(list_2) do
     for shape_1 <- list_1,
         shape_2 <- list_2,
         return_val = Collidex.Detector.collision?(shape_1, shape_2, method) do
@@ -31,4 +32,24 @@ defmodule Collidex.ListDetector do
       { shape_1, shape_2, vector }
     end
   end
+
+  def find_collisions_within(list, method \\ :accurate)
+  def find_collisions_within([], method) do
+    []
+  end
+  def find_collisions_within([head | tail], method) do
+    find_collisions([head], tail, method) ++
+      find_collisions_within(tail, method)
+  end
+
+  # def find_collisions_within(item, list, method \\ :accurate)
+  # def find_collisions_within(item, [], _) do
+  #   []
+  # end
+  # def find_collisions_within(item, list, method) do
+  #   [ head | tail ] = list
+  #   find_collisions([item], list, method) ++
+  #     find_collisions_within(head, tail, method)
+  # end
+
 end
