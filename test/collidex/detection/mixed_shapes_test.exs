@@ -8,6 +8,10 @@ defmodule TestMixedShapes do
   alias Collidex.Geometry.Circle
   alias Collidex.Geometry.Polygon
 
+  @doc """
+  A visualization of these fixture examples can me found in
+  test/collidex/detection/sat_examples.pdf
+  """
   def make_fixtures do
     %{
       a: Polygon.make([{98.14,201.81},{68.22,173.46},{77.8,133.38},{177.31,121.64},{147.24,149.98},{137.65,190.07}]),
