@@ -8,7 +8,7 @@ defmodule Collidex.Mixfile do
      description: "A 2D shape collision detection library",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps(Mix.env),
+     deps: deps,
      test_coverage: [ tool: ExCoveralls ],
      preferred_cli_env: [coveralls: :test]
    ]
