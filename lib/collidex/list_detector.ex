@@ -33,6 +33,10 @@ defmodule Collidex.ListDetector do
     end
   end
 
+  @doc """
+  Searches for collisions between elements of `list`. Returns a list of
+  collisions in the same format as find_collisions/3.
+  """
   def find_collisions_within(list, method \\ :accurate)
   def find_collisions_within([], method) do
     []
@@ -41,15 +45,4 @@ defmodule Collidex.ListDetector do
     find_collisions([head], tail, method) ++
       find_collisions_within(tail, method)
   end
-
-  # def find_collisions_within(item, list, method \\ :accurate)
-  # def find_collisions_within(item, [], _) do
-  #   []
-  # end
-  # def find_collisions_within(item, list, method) do
-  #   [ head | tail ] = list
-  #   find_collisions([item], list, method) ++
-  #     find_collisions_within(head, tail, method)
-  # end
-
 end
